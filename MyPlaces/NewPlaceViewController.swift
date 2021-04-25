@@ -30,7 +30,7 @@ class NewPlaceViewController: UITableViewController {
         setupEditScreen()
     }
     
-    // MARK: Table view delegate
+    // MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
@@ -131,7 +131,7 @@ class NewPlaceViewController: UITableViewController {
     
 }
 
-// MARK: Text field delegate
+// MARK: - Text field delegate
 extension NewPlaceViewController: UITextFieldDelegate {
     
     // Скрываем клавиатуру по нажатию на Done
@@ -151,7 +151,7 @@ extension NewPlaceViewController: UITextFieldDelegate {
     }
 }
 
-//MARK: Work with image
+//MARK: - Work with image
 extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func chooseImagePicker(source: UIImagePickerController.SourceType) {

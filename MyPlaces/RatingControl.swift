@@ -9,7 +9,7 @@ import UIKit
 
 @IBDesignable class RatingControl: UIStackView {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     var rating = 0 {
         didSet {
@@ -31,7 +31,7 @@ import UIKit
         }
     }
     
-    // MARK: Initialization
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,7 +59,7 @@ import UIKit
         }
     }
     
-    // MARK: Private methods
+    // MARK: - Private methods
     
     private func setupButtons() {
         

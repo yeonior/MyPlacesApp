@@ -223,35 +223,39 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="IH9-qW-8Ei">
-                                                    <rect key="frame" x="96" y="8" width="302" height="69"/>
+                                                    <rect key="frame" x="96" y="8" width="53.5" height="69"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OcF-aT-kMi">
-                                                            <rect key="frame" x="0.0" y="0.0" width="302" height="24.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="53.5" height="24.5"/>
                                                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lacation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tUf-pv-hdo">
-                                                            <rect key="frame" x="0.0" y="27.5" width="302" height="20"/>
+                                                            <rect key="frame" x="0.0" y="27.5" width="53.5" height="20"/>
                                                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r1x-pM-Eu5">
-                                                            <rect key="frame" x="0.0" y="50.5" width="302" height="18.5"/>
+                                                            <rect key="frame" x="0.0" y="50.5" width="53.5" height="18.5"/>
                                                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                 </stackView>
+                                                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="135" placeholderIntrinsicHeight="35" translatesAutoresizingMaskIntoConstraints="NO" id="VTC-1g-yxh" customClass="RatingControlOnCells" customModule="MyPlaces" customModuleProvider="target">
+                                                    <rect key="frame" x="259" y="25" width="135" height="35"/>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="VTC-1g-yxh" firstAttribute="centerY" secondItem="fbV-Ui-HEX" secondAttribute="centerY" id="380-gF-eIO"/>
                                                 <constraint firstItem="IH9-qW-8Ei" firstAttribute="top" secondItem="fbV-Ui-HEX" secondAttribute="top" constant="8" id="BFt-Hg-8WH"/>
                                                 <constraint firstItem="vvM-5L-O3C" firstAttribute="leading" secondItem="fbV-Ui-HEX" secondAttribute="leading" constant="15" id="CeF-xo-esT"/>
-                                                <constraint firstAttribute="trailing" secondItem="IH9-qW-8Ei" secondAttribute="trailing" constant="16" id="MMn-DO-dak"/>
                                                 <constraint firstAttribute="bottom" secondItem="IH9-qW-8Ei" secondAttribute="bottom" constant="8" id="Vbz-9y-7aa"/>
                                                 <constraint firstItem="vvM-5L-O3C" firstAttribute="centerY" secondItem="fbV-Ui-HEX" secondAttribute="centerY" id="Ypj-dq-KIW"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="VTC-1g-yxh" secondAttribute="trailing" id="gd7-qB-tL7"/>
                                                 <constraint firstItem="IH9-qW-8Ei" firstAttribute="leading" secondItem="vvM-5L-O3C" secondAttribute="trailing" constant="16" id="q43-MW-gbT"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -259,6 +263,7 @@
                                             <outlet property="imageOfPlace" destination="vvM-5L-O3C" id="Kit-RB-1gL"/>
                                             <outlet property="locationLabel" destination="tUf-pv-hdo" id="107-iV-Lqx"/>
                                             <outlet property="nameLabel" destination="OcF-aT-kMi" id="x1h-uZ-jdr"/>
+                                            <outlet property="ratingLabel" destination="VTC-1g-yxh" id="PFB-4p-j75"/>
                                             <outlet property="typeLabel" destination="r1x-pM-Eu5" id="KT3-Gq-59D"/>
                                             <segue destination="xWI-zA-cEc" kind="show" identifier="showDetail" id="t9f-Kb-Ghp"/>
                                         </connections>
@@ -312,7 +317,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fkb-Ux-1Sp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="440.80000000000001" y="8.5457271364317844"/>
+            <point key="canvasLocation" x="440.57971014492756" y="8.0357142857142847"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3KM-Cz-T7c">
