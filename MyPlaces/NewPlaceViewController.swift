@@ -13,6 +13,7 @@ class NewPlaceViewController: UITableViewController {
     var imageIsChanged = false
     
     @IBOutlet var saveButton: UIBarButtonItem!
+    @IBOutlet var mapButton: UIButton!
     
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var placeName: UITextField!
@@ -23,6 +24,8 @@ class NewPlaceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        cell.imageOfPlace.layer.cornerRadius = cell.imageOfPlace.frame.size.height / 2
+        mapButton.layer.cornerRadius = mapButton.frame.size.height / 2
         
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         saveButton.isEnabled = false
@@ -66,6 +69,12 @@ class NewPlaceViewController: UITableViewController {
         } else {
             view.endEditing(true)
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "showMap" else { return }
+        let mapVC = segue.destination as! MapViewController
+        mapVC.place = currentPlace
     }
     
     func savePlace() {

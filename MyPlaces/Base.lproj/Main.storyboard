@@ -32,12 +32,13 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cp9-8I-H7r">
-                                                    <rect key="frame" x="342" y="189" width="52" height="50"/>
+                                                    <rect key="frame" x="344" y="180" width="50" height="50"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="52" id="Nvp-eo-AfY"/>
+                                                        <constraint firstAttribute="width" constant="50" id="Nvp-eo-AfY"/>
                                                         <constraint firstAttribute="height" constant="50" id="fw7-nw-SH7"/>
                                                     </constraints>
-                                                    <color key="tintColor" systemColor="systemYellowColor"/>
+                                                    <color key="tintColor" red="0.9284347892" green="0.40437754990000002" blue="0.31737861039999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <state key="normal" image="mappin.circle.fill" catalog="system"/>
                                                     <connections>
                                                         <segue destination="Eop-f7-OJW" kind="presentation" identifier="showMap" id="0B7-0M-ySJ"/>
@@ -51,7 +52,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="wJ6-fS-tp1" secondAttribute="bottom" id="Mg6-8B-9pD"/>
                                                 <constraint firstItem="wJ6-fS-tp1" firstAttribute="leading" secondItem="x3j-TL-Eh1" secondAttribute="leading" id="ZB0-FG-X7M"/>
                                                 <constraint firstItem="cp9-8I-H7r" firstAttribute="trailing" secondItem="x3j-TL-Eh1" secondAttribute="trailingMargin" id="jxo-9Q-rKR"/>
-                                                <constraint firstItem="cp9-8I-H7r" firstAttribute="bottom" secondItem="x3j-TL-Eh1" secondAttribute="bottomMargin" id="tFD-gt-bUu"/>
+                                                <constraint firstItem="cp9-8I-H7r" firstAttribute="bottom" secondItem="x3j-TL-Eh1" secondAttribute="bottomMargin" constant="-9" id="tFD-gt-bUu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -198,6 +199,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mapButton" destination="cp9-8I-H7r" id="fwJ-NV-e0Y"/>
                         <outlet property="placeImage" destination="wJ6-fS-tp1" id="JYY-Aj-wBD"/>
                         <outlet property="placeLocation" destination="4ck-sG-1zk" id="2o8-Ix-AZk"/>
                         <outlet property="placeName" destination="IWb-HE-Q0N" id="bOH-BF-ZHk"/>
@@ -223,10 +225,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9r-wp-4oW">
-                                <rect key="frame" x="342" y="20" width="52" height="50"/>
+                                <rect key="frame" x="0.0" y="1" width="44" height="42"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="GnL-kd-HMZ"/>
-                                    <constraint firstAttribute="width" constant="52" id="xwP-XN-ddQ"/>
+                                    <constraint firstAttribute="height" constant="42" id="GnL-kd-HMZ"/>
+                                    <constraint firstAttribute="width" constant="44" id="xwP-XN-ddQ"/>
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="multiply.circle" catalog="system"/>
@@ -239,13 +241,16 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Bei-Ox-0Z3" secondAttribute="bottom" id="2FS-FK-CL4"/>
+                            <constraint firstItem="C9r-wp-4oW" firstAttribute="leading" secondItem="e5p-b2-6qL" secondAttribute="leading" id="2Fc-Pu-QUr"/>
                             <constraint firstItem="Bei-Ox-0Z3" firstAttribute="trailing" secondItem="e5p-b2-6qL" secondAttribute="trailing" id="OZ2-Cj-JIg"/>
-                            <constraint firstItem="e5p-b2-6qL" firstAttribute="trailing" secondItem="C9r-wp-4oW" secondAttribute="trailing" constant="20" id="jw0-94-Nhi"/>
-                            <constraint firstItem="C9r-wp-4oW" firstAttribute="top" secondItem="e5p-b2-6qL" secondAttribute="top" constant="20" id="qqc-tq-ZiQ"/>
+                            <constraint firstItem="C9r-wp-4oW" firstAttribute="top" secondItem="e5p-b2-6qL" secondAttribute="top" constant="1" id="qqc-tq-ZiQ"/>
                             <constraint firstItem="Bei-Ox-0Z3" firstAttribute="leading" secondItem="e5p-b2-6qL" secondAttribute="leading" id="tBh-PF-pTW"/>
                             <constraint firstItem="Bei-Ox-0Z3" firstAttribute="top" secondItem="ZeW-Cf-ji1" secondAttribute="top" id="wh6-2n-Hyv"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="Bei-Ox-0Z3" id="jcF-5n-UHK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zcP-y9-w9x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -422,9 +427,6 @@
         <image name="multiply.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
