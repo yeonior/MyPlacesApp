@@ -11,11 +11,14 @@ import MapKit
 class MapViewController: UIViewController {
     
     var place: Place!
+    let annotationIdentifier = "annotationIdentifier"
 
     @IBOutlet var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.delegate = self
         
         setupPlacemark()
     }
@@ -62,5 +65,40 @@ class MapViewController: UIViewController {
             // и выделяем метку на карте
             self.mapView.selectAnnotation(annotation, animated: true)
         }
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    
+    // метод отображения аннотации
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        // если маркер на карте — текущая геопозиция пользователя, то ничего не создаем
+        guard !(annotation is MKUserLocation) else { return nil }
+        
+        // для работы с новой аннотацией берем и используем ранее созданную аннотацию
+        // для отображения булавки, приводим объект к типу MKPinAnnotationView
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? MKPinAnnotationView
+        
+        // если аннотацию не удалось найти (не удалось отобразить), то инициализируем ее
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            // включаем дополнительное отображение информации
+            annotationView?.canShowCallout = true
+        }
+        
+        // отобразим изображение объекта в аннотации
+        if let imageData = place.imageData {
+            
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            imageView.layer.cornerRadius = 8
+            imageView.clipsToBounds = true
+            imageView.image = UIImage(data: imageData)
+            
+            // добавляем изображение в правую область аннотации
+            annotationView?.rightCalloutAccessoryView = imageView
+        }
+
+        return annotationView
     }
 }
