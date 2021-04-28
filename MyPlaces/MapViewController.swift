@@ -7,20 +7,21 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapViewController: UIViewController {
     
     var place = Place()
     let annotationIdentifier = "annotationIdentifier"
+    let locationManager = CLLocationManager()
 
     @IBOutlet var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         mapView.delegate = self
-        
         setupPlacemark()
+        checkLocationServices()
     }
     
     @IBAction func closeVC(_ sender: UIButton) {
@@ -66,6 +67,76 @@ class MapViewController: UIViewController {
             self.mapView.selectAnnotation(annotation, animated: true)
         }
     }
+    
+    // вкдючены ли сервисы геолокации
+    private func checkLocationServices() {
+        
+        // если включены, то отображаем геопозицию, если нет, то просим включить
+        if CLLocationManager.locationServicesEnabled() {
+            setupLocationManager()
+            checkLocationAuthorization()
+        } else {
+            // делаем отсрочку на 1 сек
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.promptToEnableLocationServices(title: "На вашем устройстве отключены службы геолокации!",
+                                                    message: "Перейдите в Настройки - Приватность - Службы геолокации")
+            }
+        }
+    }
+    
+    // настраиваем точность отображения геопозиции и делегируем полномочия
+    private func setupLocationManager() {
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    // запрос на включение служб геолокации
+    private func promptToEnableLocationServices(title: String, message: String) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        let goToSettingsAction = UIAlertAction(title: "Перейти", style: .default) { _ in
+            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+            if UIApplication.shared.canOpenURL(settingsURL) {
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+            }
+        }
+        alertController.addAction(goToSettingsAction)
+        present(alertController, animated: true)
+    }
+    
+    // проверяем состояние сервиса геолокации и выполняем для каждого соответствующие действия
+    private func checkLocationAuthorization() {
+        
+        switch locationManager.authorizationStatus {
+        case .authorizedWhenInUse:
+            mapView.showsUserLocation = true
+            break
+        case .denied:
+            if CLLocationManager.locationServicesEnabled() {
+                promptToEnableLocationServices(title: "Для данного приложения отключены службы геолокации!",
+                                               message: "Перейдите в Настройки - Приватность - Службы геолокации - MyPlaces")
+            } else {
+                promptToEnableLocationServices(title: "Отключены службы геолокации!",
+                                               message: "Перейдите в Настройки - Приватность - Службы геолокации")
+            }
+            break
+        case .notDetermined:
+            // запрашиваем разрешение на включение сервиса геолокации
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+            promptToEnableLocationServices(title: "Отключены службы геолокации!",
+                                           message: "Перейдите в Настройки - Приватность - Службы геолокации")
+            break
+        case .authorizedAlways:
+            break
+        // для новых сосотоянии в будущих обновлениях
+        @unknown default:
+            print("New case is available")
+        }
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -100,5 +171,13 @@ extension MapViewController: MKMapViewDelegate {
         }
 
         return annotationView
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    // для контроля изменения состояния сервиса геолокации
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkLocationServices()
     }
 }
