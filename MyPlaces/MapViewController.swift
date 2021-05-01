@@ -15,28 +15,30 @@ class MapViewController: UIViewController {
     let annotationIdentifier = "annotationIdentifier"
     let locationManager = CLLocationManager()
     let regionInMeters = 10_00.00
+    var incomeSegueIdentifier = ""
 
     @IBOutlet var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        setupPlacemark()
+        setupMapView()
         checkLocationServices()
     }
     
-    // отображение своего местоположения
+    // отображение текущего местоположения
     @IBAction func centerViewInUserLocation() {
         
-        if let location = locationManager.location?.coordinate {
-            
-            let region = MKCoordinateRegion(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-            mapView.setRegion(region, animated: true)
-        }
+        showUserLocation()
     }
     
     @IBAction func closeVC(_ sender: UIButton) {
         dismiss(animated: true)
+    }
+    
+    private func setupMapView() {
+        
+        if incomeSegueIdentifier == "showPlace" { setupPlacemark() }
     }
     
     private func setupPlacemark() {
@@ -124,6 +126,7 @@ class MapViewController: UIViewController {
         switch locationManager.authorizationStatus {
         case .authorizedWhenInUse:
             mapView.showsUserLocation = true
+            if incomeSegueIdentifier == "getAddress" { showUserLocation() }
             break
         case .denied:
             if CLLocationManager.locationServicesEnabled() {
@@ -146,6 +149,15 @@ class MapViewController: UIViewController {
         // для новых сосотоянии в будущих обновлениях
         @unknown default:
             print("New case is available")
+        }
+    }
+    
+    private func showUserLocation() {
+        
+        if let location = locationManager.location?.coordinate {
+            
+            let region = MKCoordinateRegion(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+            mapView.setRegion(region, animated: true)
         }
     }
 }

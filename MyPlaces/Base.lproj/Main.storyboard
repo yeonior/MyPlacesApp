@@ -40,7 +40,7 @@
                                                     <color key="tintColor" red="0.9284347892" green="0.40437754990000002" blue="0.31737861039999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <state key="normal" image="mappin.circle.fill" catalog="system"/>
                                                     <connections>
-                                                        <segue destination="Eop-f7-OJW" kind="presentation" identifier="showMap" id="0B7-0M-ySJ"/>
+                                                        <segue destination="Eop-f7-OJW" kind="presentation" identifier="showPlace" id="0B7-0M-ySJ"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -98,16 +98,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FRb-qI-YcE">
-                                                    <rect key="frame" x="16" y="8" width="382" height="63"/>
+                                                    <rect key="frame" x="16" y="8" width="340" height="63"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMR-Xy-uHW">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="28.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="340" height="28.5"/>
                                                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Thin" family="Apple SD Gothic Neo" pointSize="20"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Place location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ck-sG-1zk">
-                                                            <rect key="frame" x="0.0" y="36.5" width="382" height="26.5"/>
+                                                            <rect key="frame" x="0.0" y="36.5" width="340" height="26.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
@@ -116,12 +116,26 @@
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hl5-Ks-3Gv">
+                                                    <rect key="frame" x="372" y="47" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="0n1-ky-gG2"/>
+                                                        <constraint firstAttribute="height" constant="22" id="SBq-o9-BqE"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" image="location.fill.viewfinder" catalog="system"/>
+                                                    <connections>
+                                                        <segue destination="Eop-f7-OJW" kind="presentation" identifier="getAddress" id="oBb-cN-2o0"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="FRb-qI-YcE" firstAttribute="top" secondItem="fcM-eo-ELe" secondAttribute="top" constant="8" id="98m-cl-fE9"/>
+                                                <constraint firstItem="hl5-Ks-3Gv" firstAttribute="leading" secondItem="FRb-qI-YcE" secondAttribute="trailing" constant="16" id="ETc-o6-3Z2"/>
                                                 <constraint firstItem="FRb-qI-YcE" firstAttribute="leading" secondItem="fcM-eo-ELe" secondAttribute="leading" constant="16" id="GJq-9T-Dgw"/>
-                                                <constraint firstAttribute="trailing" secondItem="FRb-qI-YcE" secondAttribute="trailing" constant="16" id="Vbk-fd-ePW"/>
+                                                <constraint firstItem="hl5-Ks-3Gv" firstAttribute="trailing" secondItem="fcM-eo-ELe" secondAttribute="trailingMargin" id="Nhh-8c-UtV"/>
                                                 <constraint firstAttribute="bottom" secondItem="FRb-qI-YcE" secondAttribute="bottom" constant="4" id="eUF-bo-HgA"/>
+                                                <constraint firstItem="hl5-Ks-3Gv" firstAttribute="centerY" secondItem="4ck-sG-1zk" secondAttribute="centerY" id="mvu-bd-byz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -431,12 +445,14 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="0B7-0M-ySJ"/>
         <segue reference="t9f-Kb-Ghp"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="195" height="196"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
+        <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="mappin.circle.fill" catalog="system" width="128" height="121"/>
         <image name="multiply.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
