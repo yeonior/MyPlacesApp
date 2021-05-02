@@ -22,11 +22,13 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     let regionInMeters = 10_00.00
     var incomeSegueIdentifier = ""
+    var placeCoordinate: CLLocationCoordinate2D?
 
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var mapPinImage: UIImageView!
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var doneButton: UIButton!
+    @IBOutlet var goButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,15 +51,22 @@ class MapViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @IBAction func goButtonPressed() {
+        getDirections()
+    }
+    
     // MARK: - ПРОСМОТР МЕСТА НА КАРТЕ
     
     private func setupMapView() {
+        
+        goButton.isHidden = true
         
         if incomeSegueIdentifier == "showPlace" {
             setupPlacemark()
             mapPinImage.isHidden = true
             addressLabel.isHidden = true
             doneButton.isHidden = true
+            goButton.isHidden = false
         }
     }
     
@@ -94,6 +103,7 @@ class MapViewController: UIViewController {
             // если получается определить место, то присваиваем аннотацию места к аннотации метки
             guard let placemarkAnnotation = placemark?.location else { return }
             annotation.coordinate = placemarkAnnotation.coordinate
+            self.placeCoordinate = placemarkAnnotation.coordinate
             // задаем видимую область карты таким образом, чтобы были видны все аннотации
             self.mapView.showAnnotations([annotation], animated: true)
             // и выделяем метку на карте
@@ -113,7 +123,7 @@ class MapViewController: UIViewController {
         } else {
             // делаем отсрочку на 1 сек
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.promptToEnableLocationServices(title: "На вашем устройстве отключены службы геолокации!",
+                self.requestToEnableLocationServices(title: "На вашем устройстве отключены службы геолокации!",
                                                     message: "Перейдите в Настройки - Приватность - Службы геолокации")
             }
         }
@@ -127,7 +137,7 @@ class MapViewController: UIViewController {
     }
     
     // запрос на включение служб геолокации
-    private func promptToEnableLocationServices(title: String, message: String) {
+    private func requestToEnableLocationServices(title: String, message: String) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
@@ -152,10 +162,10 @@ class MapViewController: UIViewController {
             break
         case .denied:
             if CLLocationManager.locationServicesEnabled() {
-                promptToEnableLocationServices(title: "Для данного приложения отключены службы геолокации!",
+                requestToEnableLocationServices(title: "Для данного приложения отключены службы геолокации!",
                                                message: "Перейдите в Настройки - Приватность - Службы геолокации - MyPlaces")
             } else {
-                promptToEnableLocationServices(title: "Отключены службы геолокации!",
+                requestToEnableLocationServices(title: "Отключены службы геолокации!",
                                                message: "Перейдите в Настройки - Приватность - Службы геолокации")
             }
             break
@@ -163,7 +173,7 @@ class MapViewController: UIViewController {
             // запрашиваем разрешение на включение сервиса геолокации
             locationManager.requestWhenInUseAuthorization()
         case .restricted:
-            promptToEnableLocationServices(title: "Отключены службы геолокации!",
+            requestToEnableLocationServices(title: "Отключены службы геолокации!",
                                            message: "Перейдите в Настройки - Приватность - Службы геолокации")
             break
         case .authorizedAlways:
@@ -193,6 +203,87 @@ class MapViewController: UIViewController {
         let longitude = mapView.centerCoordinate.longitude
         
         return CLLocation(latitude: latitude, longitude: longitude)
+    }
+    
+    // MARK: - РАБОТАМ С МАРШРУТОМ
+    
+    // метод для построения маршрута
+    private func getDirections() {
+        
+        // проверяем, что можем получить координаты текущего местоположения
+        guard let location = locationManager.location?.coordinate else {
+            showAlert(title: "Ошибка!", message: "Текущее местоположение не распознано")
+            return
+        }
+        
+        // проверяем, что можем получить координаты места назначения
+        guard let request = createDirectionsRequest(from: location) else {
+            showAlert(title: "Ошибка!", message: "Не удалось найти место назначения")
+            return
+        }
+        
+        // создаем маршруты
+        let directions = MKDirections(request: request)
+        
+        directions.calculate { (response, error) in
+            
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response else {
+                self.showAlert(title: "Ошибка!", message: "Маршрут недоступен")
+                return
+            }
+            
+            // перебираем все доступные маршруты
+            for route in response.routes {
+                
+                // добавляем подробную геометрию
+                self.mapView.addOverlay(route.polyline)
+                
+                // фокусируем карту на всех маршрутах
+                self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+                
+                // другая информация
+                let distance = String(format: "%.1f", route.distance / 1000)
+                let timeInterval = round(route.expectedTravelTime / 60)
+                
+                print("Расстояние составляет \(distance) км")
+                print("Время в пути равно \(timeInterval) мин")
+            }
+        }
+    }
+    
+    // запрос на построение маршрута
+    private func createDirectionsRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request? {
+        
+        guard let destinationCoordinte = placeCoordinate else { return nil }
+        
+        // задаем начальную точку маршрута
+        let startingLocation = MKPlacemark(coordinate: coordinate)
+        
+        // задаем конечную точку маршрута
+        let destination = MKPlacemark(coordinate: destinationCoordinte)
+        
+        // запрашиваем построение маршрута
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: startingLocation)
+        request.destination = MKMapItem(placemark: destination)
+        request.transportType = .automobile
+        request.requestsAlternateRoutes = true
+        
+        return request
+    }
+    
+    // алерт контроллер
+    private func showAlert(title: String, message: String) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
     }
 }
 
@@ -267,6 +358,17 @@ extension MapViewController: MKMapViewDelegate {
                 }
             }
         }
+    }
+    
+    // MARK: - ОТОБРАЖЕНИЕ МАРШРУТА
+    
+    // рендеринг маршрута
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        
+        let renderer = MKPolylineRenderer(overlay: overlay as! MKPolyline)
+        renderer.strokeColor = .green
+        
+        return renderer
     }
 }
 

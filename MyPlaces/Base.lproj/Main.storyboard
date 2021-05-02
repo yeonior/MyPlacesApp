@@ -285,6 +285,18 @@
                                     <action selector="doneButtonPressed" destination="Eop-f7-OJW" eventType="touchUpInside" id="apP-OP-X1i"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rny-ap-Y03">
+                                <rect key="frame" x="182" y="656" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="UVP-8h-pVE"/>
+                                    <constraint firstAttribute="height" constant="50" id="vZ9-zk-NZ9"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="arrow.right" catalog="system"/>
+                                <connections>
+                                    <action selector="goButtonPressed" destination="Eop-f7-OJW" eventType="touchUpInside" id="uIt-vp-rX8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e5p-b2-6qL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -301,16 +313,19 @@
                             <constraint firstItem="e5p-b2-6qL" firstAttribute="bottom" secondItem="99U-id-YMR" secondAttribute="bottom" constant="103" id="Wx3-Mm-bqw"/>
                             <constraint firstItem="aut-WP-Ucd" firstAttribute="centerX" secondItem="ZeW-Cf-ji1" secondAttribute="centerX" id="Y9f-P4-gyv"/>
                             <constraint firstItem="Bei-Ox-0Z3" firstAttribute="top" secondItem="gag-Ba-lzj" secondAttribute="bottom" constant="-200" id="gCg-BZ-dKg"/>
+                            <constraint firstItem="rny-ap-Y03" firstAttribute="centerX" secondItem="ZeW-Cf-ji1" secondAttribute="centerX" id="hTe-V1-XyR"/>
                             <constraint firstItem="j8x-Gx-jKE" firstAttribute="bottom" secondItem="e5p-b2-6qL" secondAttribute="bottom" constant="-100" id="mnF-WH-vVO"/>
                             <constraint firstItem="C9r-wp-4oW" firstAttribute="top" secondItem="e5p-b2-6qL" secondAttribute="top" constant="1" id="qqc-tq-ZiQ"/>
                             <constraint firstItem="99U-id-YMR" firstAttribute="centerX" secondItem="ZeW-Cf-ji1" secondAttribute="centerX" id="rYl-JS-MLO"/>
                             <constraint firstItem="Bei-Ox-0Z3" firstAttribute="leading" secondItem="e5p-b2-6qL" secondAttribute="leading" id="tBh-PF-pTW"/>
+                            <constraint firstItem="e5p-b2-6qL" firstAttribute="bottom" secondItem="rny-ap-Y03" secondAttribute="bottom" constant="102" id="vzg-zv-F0i"/>
                             <constraint firstItem="Bei-Ox-0Z3" firstAttribute="top" secondItem="ZeW-Cf-ji1" secondAttribute="top" id="wh6-2n-Hyv"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="addressLabel" destination="gag-Ba-lzj" id="fuy-oJ-Dlx"/>
                         <outlet property="doneButton" destination="99U-id-YMR" id="MVg-Cq-Ipn"/>
+                        <outlet property="goButton" destination="rny-ap-Y03" id="SRj-ON-iy0"/>
                         <outlet property="mapPinImage" destination="aut-WP-Ucd" id="vaF-Ne-gYt"/>
                         <outlet property="mapView" destination="Bei-Ox-0Z3" id="jcF-5n-UHK"/>
                     </connections>
@@ -487,6 +502,7 @@
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="195" height="196"/>
+        <image name="arrow.right" catalog="system" width="128" height="98"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="mappin" catalog="system" width="105" height="128"/>
