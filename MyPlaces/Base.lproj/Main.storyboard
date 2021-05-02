@@ -261,21 +261,57 @@
                                     <action selector="centerViewInUserLocation" destination="Eop-f7-OJW" eventType="touchUpInside" id="D1M-hU-yWo"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mappin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="aut-WP-Ucd">
+                                <rect key="frame" x="187" y="380.5" width="40" height="40"/>
+                                <color key="tintColor" red="0.9284347892" green="0.40437754990000002" blue="0.31737861039999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="IAD-WQ-rNk"/>
+                                    <constraint firstAttribute="width" constant="40" id="WzE-1N-gSj"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="gag-Ba-lzj">
+                                <rect key="frame" x="20" y="132" width="374" height="68"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99U-id-YMR">
+                                <rect key="frame" x="170" y="657" width="74" height="48"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneButtonPressed" destination="Eop-f7-OJW" eventType="touchUpInside" id="apP-OP-X1i"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e5p-b2-6qL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Bei-Ox-0Z3" secondAttribute="bottom" id="2FS-FK-CL4"/>
                             <constraint firstItem="C9r-wp-4oW" firstAttribute="leading" secondItem="e5p-b2-6qL" secondAttribute="leading" id="2Fc-Pu-QUr"/>
+                            <constraint firstItem="gag-Ba-lzj" firstAttribute="leading" secondItem="e5p-b2-6qL" secondAttribute="leading" constant="20" id="3O8-bb-02e"/>
+                            <constraint firstItem="e5p-b2-6qL" firstAttribute="trailing" secondItem="gag-Ba-lzj" secondAttribute="trailing" constant="20" id="5Yg-7u-ynG"/>
+                            <constraint firstItem="gag-Ba-lzj" firstAttribute="width" secondItem="Bei-Ox-0Z3" secondAttribute="width" multiplier="0.903382" id="6IL-Ci-XnT"/>
+                            <constraint firstItem="gag-Ba-lzj" firstAttribute="height" secondItem="Bei-Ox-0Z3" secondAttribute="height" multiplier="0.0807601" id="8Eu-Vx-V9P"/>
+                            <constraint firstItem="aut-WP-Ucd" firstAttribute="centerY" secondItem="ZeW-Cf-ji1" secondAttribute="centerY" constant="-20" id="FCB-rl-3TG"/>
                             <constraint firstItem="e5p-b2-6qL" firstAttribute="trailing" secondItem="j8x-Gx-jKE" secondAttribute="trailing" constant="20" id="JQa-KW-ePr"/>
                             <constraint firstItem="Bei-Ox-0Z3" firstAttribute="trailing" secondItem="e5p-b2-6qL" secondAttribute="trailing" id="OZ2-Cj-JIg"/>
+                            <constraint firstItem="e5p-b2-6qL" firstAttribute="bottom" secondItem="99U-id-YMR" secondAttribute="bottom" constant="103" id="Wx3-Mm-bqw"/>
+                            <constraint firstItem="aut-WP-Ucd" firstAttribute="centerX" secondItem="ZeW-Cf-ji1" secondAttribute="centerX" id="Y9f-P4-gyv"/>
+                            <constraint firstItem="Bei-Ox-0Z3" firstAttribute="top" secondItem="gag-Ba-lzj" secondAttribute="bottom" constant="-200" id="gCg-BZ-dKg"/>
                             <constraint firstItem="j8x-Gx-jKE" firstAttribute="bottom" secondItem="e5p-b2-6qL" secondAttribute="bottom" constant="-100" id="mnF-WH-vVO"/>
                             <constraint firstItem="C9r-wp-4oW" firstAttribute="top" secondItem="e5p-b2-6qL" secondAttribute="top" constant="1" id="qqc-tq-ZiQ"/>
+                            <constraint firstItem="99U-id-YMR" firstAttribute="centerX" secondItem="ZeW-Cf-ji1" secondAttribute="centerX" id="rYl-JS-MLO"/>
                             <constraint firstItem="Bei-Ox-0Z3" firstAttribute="leading" secondItem="e5p-b2-6qL" secondAttribute="leading" id="tBh-PF-pTW"/>
                             <constraint firstItem="Bei-Ox-0Z3" firstAttribute="top" secondItem="ZeW-Cf-ji1" secondAttribute="top" id="wh6-2n-Hyv"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addressLabel" destination="gag-Ba-lzj" id="fuy-oJ-Dlx"/>
+                        <outlet property="doneButton" destination="99U-id-YMR" id="MVg-Cq-Ipn"/>
+                        <outlet property="mapPinImage" destination="aut-WP-Ucd" id="vaF-Ne-gYt"/>
                         <outlet property="mapView" destination="Bei-Ox-0Z3" id="jcF-5n-UHK"/>
                     </connections>
                 </viewController>
@@ -453,6 +489,7 @@
         <image name="Photo" width="195" height="196"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
+        <image name="mappin" catalog="system" width="105" height="128"/>
         <image name="mappin.circle.fill" catalog="system" width="128" height="121"/>
         <image name="multiply.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
