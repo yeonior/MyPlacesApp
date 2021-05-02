@@ -9,8 +9,14 @@ import UIKit
 import MapKit
 import CoreLocation
 
+// для передачи адреса в другой вьюконтроллер
+protocol MapViewControllerDelegate {
+    func getAddress(_ address: String?)
+}
+
 class MapViewController: UIViewController {
     
+    var mapViewControllerDelegate: MapViewControllerDelegate?
     var place = Place()
     let annotationIdentifier = "annotationIdentifier"
     let locationManager = CLLocationManager()
@@ -30,9 +36,7 @@ class MapViewController: UIViewController {
         checkLocationServices()
     }
     
-    // отображение текущего местоположения
     @IBAction func centerViewInUserLocation() {
-        
         showUserLocation()
     }
     
@@ -41,8 +45,11 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func doneButtonPressed() {
-        
+        mapViewControllerDelegate?.getAddress(addressLabel.text)
+        dismiss(animated: true)
     }
+    
+    // MARK: - ПРОСМОТР МЕСТА НА КАРТЕ
     
     private func setupMapView() {
         
@@ -94,7 +101,9 @@ class MapViewController: UIViewController {
         }
     }
     
-    // вкдючены ли сервисы геолокации
+    // MARK: - ПРОВЕРКА СЛУЖБ ГЕОЛОКАЦИИ
+    
+    // включены ли сервисы геолокации
     private func checkLocationServices() {
         
         // если включены, то отображаем геопозицию, если нет, то просим включить
@@ -165,6 +174,9 @@ class MapViewController: UIViewController {
         }
     }
     
+    // MARK: - РАБОТА С КООРДИНАТАМИ
+    
+    // отображение текущего местоположения
     private func showUserLocation() {
         
         if let location = locationManager.location?.coordinate {
@@ -174,6 +186,7 @@ class MapViewController: UIViewController {
         }
     }
     
+    // получаем координаты центральной точки карты
     private func getCenterLocation(for mapView: MKMapView) -> CLLocation {
         
         let latitude = mapView.centerCoordinate.latitude
@@ -183,7 +196,12 @@ class MapViewController: UIViewController {
     }
 }
 
+// MARK: - РАСШИРЕНИЯ
+
+
 extension MapViewController: MKMapViewDelegate {
+    
+    // MARK: - ИЗМЕНЕНИЕ АННОТАЦИИ
     
     // метод отображения аннотации
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -217,11 +235,15 @@ extension MapViewController: MKMapViewDelegate {
         return annotationView
     }
     
+    // MARK: - ПОЛУЧЕНИЕ АДРЕСА С КАРТЫ
+    
+    // при изменении позиции получаем название адреса
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         let center = getCenterLocation(for: mapView)
         let geocoder = CLGeocoder()
         
+        // по координатам получаем название адреса
         geocoder.reverseGeocodeLocation(center) { (placemarks, error) in
             
             if let error = error {
@@ -248,9 +270,10 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
+// MARK: - КОНТРОЛЬ ИЗМЕНЕНИЯ СЛУЖБ ГЕОЛОКАЦИИ
+
 extension MapViewController: CLLocationManagerDelegate {
     
-    // для контроля изменения состояния сервиса геолокации
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationServices()
     }
