@@ -20,9 +20,15 @@ class MapViewController: UIViewController {
     var place = Place()
     let annotationIdentifier = "annotationIdentifier"
     let locationManager = CLLocationManager()
-    let regionInMeters = 10_00.00
+    let regionInMeters = 1000.00
     var incomeSegueIdentifier = ""
     var placeCoordinate: CLLocationCoordinate2D?
+    var directionsArray: [MKDirections] = []
+    var previousLocation: CLLocation? {
+        didSet {
+            startTrackingUserLocation()
+        }
+    }
 
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var mapPinImage: UIImageView!
@@ -109,6 +115,17 @@ class MapViewController: UIViewController {
             // и выделяем метку на карте
             self.mapView.selectAnnotation(annotation, animated: true)
         }
+    }
+    
+    // перед отрисовкой новых маршрутов, удаляем прежние
+    private func resetMapView(withNew directions: MKDirections) {
+        
+        mapView.removeOverlays(mapView.overlays)
+        directionsArray.append(directions)
+        // отменяем каждый маршрут в массиве
+        let _ = directionsArray.map { $0.cancel() }
+        // удаляем все элементы массива
+        directionsArray.removeAll()
     }
     
     // MARK: - ПРОВЕРКА СЛУЖБ ГЕОЛОКАЦИИ
@@ -205,6 +222,23 @@ class MapViewController: UIViewController {
         return CLLocation(latitude: latitude, longitude: longitude)
     }
     
+    // отслеживание текущего местоположения
+    private func startTrackingUserLocation() {
+        
+        guard let previousLocation = previousLocation else { return }
+        let center = getCenterLocation(for: mapView)
+        
+        // если расстояние от предыдушего места до текущего больше 50 м
+        guard center.distance(from: previousLocation) > 50 else { return }
+        // то обновляем предыдущее место
+        self.previousLocation = center
+        
+        // центрируем новое местоположении спустя 3 сек
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.showUserLocation()
+        }
+    }
+    
     // MARK: - РАБОТАМ С МАРШРУТОМ
     
     // метод для построения маршрута
@@ -216,6 +250,9 @@ class MapViewController: UIViewController {
             return
         }
         
+        locationManager.startUpdatingLocation()
+        previousLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+        
         // проверяем, что можем получить координаты места назначения
         guard let request = createDirectionsRequest(from: location) else {
             showAlert(title: "Ошибка!", message: "Не удалось найти место назначения")
@@ -224,6 +261,8 @@ class MapViewController: UIViewController {
         
         // создаем маршруты
         let directions = MKDirections(request: request)
+        // перед отрисовкой новых маршрутов, удаляем прежние
+        resetMapView(withNew: directions)
         
         directions.calculate { (response, error) in
             
@@ -333,6 +372,16 @@ extension MapViewController: MKMapViewDelegate {
         
         let center = getCenterLocation(for: mapView)
         let geocoder = CLGeocoder()
+        
+        // центрируем карту по местоположению при ее смещении
+        if incomeSegueIdentifier == "showPlace" && previousLocation != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.showUserLocation()
+            }
+        }
+        
+        // для освобождения ресурсов, связанных с геокодированием
+        geocoder.cancelGeocode()
         
         // по координатам получаем название адреса
         geocoder.reverseGeocodeLocation(center) { (placemarks, error) in

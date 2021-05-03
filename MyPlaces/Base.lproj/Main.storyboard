@@ -235,7 +235,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Bei-Ox-0Z3">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="0.0" width="233" height="842"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9r-wp-4oW">
                                 <rect key="frame" x="0.0" y="1" width="44" height="42"/>
@@ -250,7 +250,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8x-Gx-jKE">
-                                <rect key="frame" x="344" y="658" width="50" height="50"/>
+                                <rect key="frame" x="180.5" y="658" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="R6l-Du-O8l"/>
                                     <constraint firstAttribute="width" constant="50" id="gHo-SO-trD"/>
@@ -262,7 +262,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mappin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="aut-WP-Ucd">
-                                <rect key="frame" x="187" y="380.5" width="40" height="40"/>
+                                <rect key="frame" x="105.5" y="380.5" width="40" height="40"/>
                                 <color key="tintColor" red="0.9284347892" green="0.40437754990000002" blue="0.31737861039999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="IAD-WQ-rNk"/>
@@ -270,13 +270,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="gag-Ba-lzj">
-                                <rect key="frame" x="20" y="132" width="374" height="68"/>
+                                <rect key="frame" x="20" y="132" width="210.5" height="68"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99U-id-YMR">
-                                <rect key="frame" x="170" y="657" width="74" height="48"/>
+                                <rect key="frame" x="88.5" y="657" width="74" height="48"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <state key="normal" title="Done">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -286,7 +286,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rny-ap-Y03">
-                                <rect key="frame" x="182" y="656" width="50" height="50"/>
+                                <rect key="frame" x="100.5" y="656" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="UVP-8h-pVE"/>
                                     <constraint firstAttribute="height" constant="50" id="vZ9-zk-NZ9"/>
@@ -332,7 +332,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zcP-y9-w9x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1985.5072463768117" y="8.7053571428571423"/>
+            <point key="canvasLocation" x="2001" y="9"/>
         </scene>
         <!--My Places-->
         <scene sceneID="bHC-zM-Igb">
